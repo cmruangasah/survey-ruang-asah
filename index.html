@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survey Ruang Asah — Ruang Karir</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6C4FF6;
+      --primary-light: #8B70F8;
+      --primary-dark: #4E35D0;
+      --accent: #F5A623;
+      --bg: #0D0B1A;
+      --bg-card: #161226;
+      --bg-input: #1E1834;
+      --text: #F0EDF9;
+      --text-muted: #8B82A8;
+      --border: #2A2347;
+      --success: #34D399;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(108,79,246,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -200px; right: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(245,166,35,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 620px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 999px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--primary-light);
+      margin-bottom: 12px;
+    }
+    .step-title {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .intro-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .logo-badge {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .logo-text { font-size: 15px; font-weight: 700; }
+    .logo-sub { font-size: 12px; color: var(--text-muted); }
+
+    .intro-title {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #fff 30%, var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .intro-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(108,79,246,0.15);
+      border: 1px solid rgba(108,79,246,0.3);
+      color: var(--primary-light);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 32px;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .options.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .option-item:hover {
+      border-color: var(--primary);
+      background: rgba(108,79,246,0.08);
+    }
+    .option-item.selected {
+      border-color: var(--primary);
+      background: rgba(108,79,246,0.15);
+    }
+    .option-item input { display: none; }
+
+    .option-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .option-dot.checkbox { border-radius: 6px; }
+    .option-item.selected .option-dot {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .option-item.selected .option-dot::after {
+      content: '';
+      width: 8px; height: 8px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .option-item.selected .option-dot.checkbox::after {
+      content: 'v';
+      font-size: 11px;
+      color: #fff;
+      border-radius: 0;
+      width: auto; height: auto;
+      background: none;
+      font-weight: 900;
+    }
+    .option-emoji { font-size: 20px; flex-shrink: 0; }
+    .option-text { font-size: 14px; font-weight: 500; line-height: 1.4; }
+    .option-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    .scale-wrap {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .scale-btn {
+      width: 52px; height: 52px;
+      border: 1.5px solid var(--border);
+      background: var(--bg-input);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .scale-btn:hover { border-color: var(--primary); background: rgba(108,79,246,0.1); }
+    .scale-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      padding: 14px 16px;
+      resize: vertical;
+      min-height: 110px;
+      outline: none;
+      transition: border-color 0.2s;
+      line-height: 1.6;
+    }
+    textarea:focus { border-color: var(--primary); }
+    textarea::placeholder { color: var(--text-muted); }
+
+    .other-input {
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+      display: none;
+    }
+    .other-input:focus { border-color: var(--primary); }
+    .other-input.show { display: block; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+    }
+    .btn-back {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .btn-back:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .btn-back:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .btn-next {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(108,79,246,0.35);
+    }
+    .btn-next:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(108,79,246,0.45); }
+    .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .step { display: none; animation: fadeSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .step.active { display: block; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+    .thankyou { text-align: center; padding: 16px 0; }
+    .thankyou .icon-wrap {
+      width: 80px; height: 80px;
+      background: rgba(52,211,153,0.15);
+      border: 2px solid rgba(52,211,153,0.3);
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      animation: popIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .thankyou h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+    .thankyou p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+
+    @media (max-width: 480px) {
+      .card { padding: 28px 20px; }
+      .options.grid-2 { grid-template-columns: 1fr; }
+      .scale-btn { width: 44px; height: 44px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div class="card">
+
+    <!-- STEP 0: Intro -->
+    <div class="step active" id="step-0">
+      <div class="intro-logo">
+        <div class="logo-badge">&#10024;</div>
+        <div>
+          <div class="logo-text">Ruang Karir</div>
+          <div class="logo-sub">Community Insights</div>
+        </div>
+      </div>
+      <div class="intro-title">Hei! Boleh minta pendapatmu? &#128588;</div>
+      <div class="intro-desc">
+        Kami lagi menyiapkan sesuatu yang baru &mdash; <strong>Ruang Asah</strong> &mdash; sebuah wadah untuk
+        mengasah diri secara konsisten. Sebagai salah satu member paling aktif di komunitas,
+        masukanmu sangat berarti banget buat kami.
+      </div>
+      <div class="time-badge">&#9201; Hanya 3&ndash;5 menit</div>
+      <div class="nav">
+        <span></span>
+        <button class="btn-next" onclick="goNext()">Mulai Survey &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 1: Segmen karir -->
+    <div class="step" id="step-1">
+      <div class="step-label">Pertanyaan 1 dari 7</div>
+      <div class="step-title">Sekarang kamu lagi di fase apa? &#129517;</div>
+      <div class="step-desc">Pilih yang paling menggambarkan kondisimu saat ini.</div>
+      <div class="options" id="q1-opts">
+        <label class="option-item" onclick="selectOption(this,'q1','fresh_grad')">
+          <input type="radio" name="q1" value="fresh_grad"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#127891;</div>
+          <div><div class="option-text">Fresh grad / baru lulus</div><div class="option-sub">Sedang mencari pekerjaan pertama</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q1','entry')">
+          <input type="radio" name="q1" value="entry"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128188;</div>
+          <div><div class="option-text">Baru mulai kerja</div><div class="option-sub">0&ndash;2 tahun pengalaman kerja</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q1','mid')">
+          <input type="radio" name="q1" value="mid"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128200;</div>
+          <div><div class="option-text">Sudah beberapa tahun kerja</div><div class="option-sub">2&ndash;5 tahun, lagi cari growth</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q1','senior')">
+          <input type="radio" name="q1" value="senior"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#127942;</div>
+          <div><div class="option-text">Senior / cukup berpengalaman</div><div class="option-sub">5+ tahun, sudah di level menengah ke atas</div></div>
+        </label>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()" disabled>&#8592; Kembali</button>
+        <button class="btn-next" id="btn-1" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Topik belajar -->
+    <div class="step" id="step-2">
+      <div class="step-label">Pertanyaan 2 dari 7</div>
+      <div class="step-title">Sekarang kamu lagi aktif belajar apa? &#128218;</div>
+      <div class="step-desc">Pilih semua yang sedang kamu pelajari atau explore. Boleh lebih dari satu.</div>
+      <div class="options grid-2" id="q2-opts">
+        <div class="option-item" onclick="toggleCheckbox(this,'q2','hard_skill')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#128187;</div><div class="option-text">Hard skill teknis</div><div class="option-sub">Coding, data, desain, dll</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q2','soft_skill')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#128483;</div><div class="option-text">Soft skill</div><div class="option-sub">Komunikasi, leadership, dll</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q2','ai')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#129302;</div><div class="option-text">AI &amp; teknologi baru</div><div class="option-sub">Tools, prompting, automasi</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q2','career')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#127919;</div><div class="option-text">Karir &amp; personal branding</div><div class="option-sub">LinkedIn, portofolio, dll</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q2','bisnis')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#128202;</div><div class="option-text">Bisnis &amp; entrepreneurship</div><div class="option-sub">Finansial, startup, side hustle</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q2','wellbeing')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#129472;</div><div class="option-text">Produktivitas &amp; wellbeing</div><div class="option-sub">Mindset, manajemen waktu</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q2','other_topic')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#9999;</div><div class="option-text">Lainnya</div><div class="option-sub">Isi di bawah</div></div>
+        </div>
+      </div>
+      <input type="text" class="other-input" id="q2-other" placeholder="Topik lainnya..." />
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-2" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: AI level -->
+    <div class="step" id="step-3">
+      <div class="step-label">Pertanyaan 3 dari 7</div>
+      <div class="step-title">Sejauh ini, kamu sudah seberapa dalam explore AI? &#129302;</div>
+      <div class="step-desc">Jujur aja ya, nggak ada jawaban yang salah!</div>
+      <div class="options" id="q3-opts">
+        <label class="option-item" onclick="selectOption(this,'q3','belum')">
+          <input type="radio" name="q3" value="belum"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128517;</div>
+          <div><div class="option-text">Belum sama sekali</div><div class="option-sub">Belum tau harus mulai dari mana</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q3','tau_belum_pakai')">
+          <input type="radio" name="q3" value="tau_belum_pakai"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128064;</div>
+          <div><div class="option-text">Udah tau, tapi belum pakai secara rutin</div><div class="option-sub">Pernah coba tapi belum konsisten</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q3','pakai_permukaan')">
+          <input type="radio" name="q3" value="pakai_permukaan"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128295;</div>
+          <div><div class="option-text">Udah pakai beberapa tools AI</div><div class="option-sub">ChatGPT, dll &mdash; tapi masih permukaan</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q3','pakai_rutin')">
+          <input type="radio" name="q3" value="pakai_rutin"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128640;</div>
+          <div><div class="option-text">Sudah pakai AI secara rutin di kerjaan</div><div class="option-sub">Aktif dan lumayan dalam eksplorasi AI</div></div>
+        </label>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-3" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: AI use case (conditional) -->
+    <div class="step" id="step-4">
+      <div class="step-label">Pertanyaan 4 dari 7</div>
+      <div class="step-title">AI yang kamu explore itu lebih ke arah apa? &#127919;</div>
+      <div class="step-desc">Pilih semua yang relevan.</div>
+      <div class="options" id="q4-opts">
+        <div class="option-item" onclick="toggleCheckbox(this,'q4','produktivitas')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#9889;</div>
+          <div><div class="option-text">Produktivitas &amp; efisiensi kerja</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q4','konten')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#9997;</div>
+          <div><div class="option-text">Nulis, konten, &amp; komunikasi</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q4','data')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#128202;</div>
+          <div><div class="option-text">Analisis data &amp; riset</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q4','coding')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#128187;</div>
+          <div><div class="option-text">Coding &amp; automasi</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q4','belum_tau_fokus')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#129300;</div>
+          <div><div class="option-text">Pengen tau lebih, tapi belum tau mau fokus ke mana</div></div>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-4" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Segmented -->
+    <div class="step" id="step-5">
+      <div class="step-label">Pertanyaan 5 dari 7</div>
+      <div class="step-title" id="q5-title"></div>
+      <div class="step-desc" id="q5-desc"></div>
+      <div class="options" id="q5-opts"></div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-5" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: Hambatan -->
+    <div class="step" id="step-6">
+      <div class="step-label">Pertanyaan 6 dari 7</div>
+      <div class="step-title">Apa yang paling sering bikin kamu ga jadi belajar? &#128556;</div>
+      <div class="step-desc">Pilih semua yang relate.</div>
+      <div class="options grid-2" id="q6-opts">
+        <div class="option-item" onclick="toggleCheckbox(this,'q6','waktu')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#9200;</div>
+          <div><div class="option-text">Sibuk, kurang waktu</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q6','biaya')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#128184;</div>
+          <div><div class="option-text">Biaya kursus mahal</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q6','bingung')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#129335;</div>
+          <div><div class="option-text">Bingung mulai dari mana</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q6','konsistensi')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#128565;</div>
+          <div><div class="option-text">Susah konsisten sendirian</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q6','motivasi')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#128534;</div>
+          <div><div class="option-text">Kurang motivasi / energi</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q6','relevansi')">
+          <div class="option-dot checkbox"></div>
+          <div class="option-emoji">&#127919;</div>
+          <div><div class="option-text">Konten kurang relevan</div></div>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-6" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 7: Key question -->
+    <div class="step" id="step-7">
+      <div class="step-label">Pertanyaan 7 dari 7</div>
+      <div class="step-title">Kalau Ruang Asah hadir, apa yang HARUS ada? &#10024;</div>
+      <div class="step-desc">
+        Bayangkan ada komunitas belajar yang terstruktur tapi tetap kerasa santai seperti Ruang Curhat.
+        Apa 1 hal yang paling penting supaya kamu mau aktif di sana?
+      </div>
+      <textarea id="q7-text" placeholder="Tulis pendapatmu di sini &mdash; bebas dan jujur aja!" oninput="checkTextarea()"></textarea>
+
+      <hr class="divider" />
+
+      <div class="step-title" style="font-size:16px; margin-bottom:6px;">Seberapa tertarik kamu kalau Ruang Asah beneran hadir? &#128293;</div>
+      <div class="scale-wrap" id="q8-scale">
+        <button class="scale-btn" onclick="selectScale(1)" data-val="1">1</button>
+        <button class="scale-btn" onclick="selectScale(2)" data-val="2">2</button>
+        <button class="scale-btn" onclick="selectScale(3)" data-val="3">3</button>
+        <button class="scale-btn" onclick="selectScale(4)" data-val="4">4</button>
+        <button class="scale-btn" onclick="selectScale(5)" data-val="5">5</button>
+      </div>
+      <div class="scale-labels"><span>Kurang tertarik</span><span>Sangat tertarik!</span></div>
+
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-7" onclick="submitForm()" disabled>Kirim Jawaban &#128640;</button>
+      </div>
+    </div>
+
+    <!-- STEP 8: Thank you -->
+    <div class="step" id="step-8">
+      <div class="thankyou">
+        <div class="icon-wrap">&#127881;</div>
+        <h2>Terima kasih banyak!</h2>
+        <p>
+          Masukanmu sangat berharga untuk kami. Kamu adalah bagian dari orang-orang pertama
+          yang membantu membentuk <strong>Ruang Asah</strong>. &#128156;
+          <br/><br/>
+          Kalau ada update menarik, kamu pasti yang pertama tahu!
+        </p>
+        <div style="margin-top:28px;">
+          <button class="btn-next" onclick="window.close()" style="margin:0 auto; display:flex;">
+            &#10004; Selesai
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var currentStep = 0;
+  var answers = {};
+  var q8Scale = null;
+
+  var q5Content = {
+    fresh_grad: {
+      title: 'Skill apa yang paling kamu rasa kurang untuk bisa masuk kerja? &#127891;',
+      desc: 'Pilih yang paling relate sama kondisimu sekarang.',
+      options: [
+        { val:'hard_skill_teknis', emoji:'&#128187;', text:'Hard skill teknis yang relevan', sub:'Coding, data, desain, dll' },
+        { val:'portfolio', emoji:'&#128193;', text:'Portofolio &amp; pengalaman nyata', sub:'Bingung mau tunjukin apa ke rekruter' },
+        { val:'soft_skill', emoji:'&#128483;', text:'Soft skill &amp; komunikasi profesional', sub:'Presentasi, negosiasi, networking' },
+        { val:'navigasi_karir', emoji:'&#129517;', text:'Navigasi dunia kerja', sub:'Cara apply, interview, salary negotiation' },
+      ]
+    },
+    entry: {
+      title: 'Di awal karir ini, kamu paling butuh apa? &#128188;',
+      desc: 'Pilih yang paling menggambarkan kebutuhanmu sekarang.',
+      options: [
+        { val:'skill_up', emoji:'&#128200;', text:'Upgrade skill lebih cepat', sub:'Supaya makin relevan &amp; percaya diri' },
+        { val:'networking', emoji:'&#129309;', text:'Bangun network yang tepat', sub:'Ketemu orang yang bisa bantu growth' },
+        { val:'mentor', emoji:'&#128104;&#8205;&#127979;', text:'Akses ke mentor atau senior', sub:'Insight dari yang sudah berpengalaman' },
+        { val:'arah', emoji:'&#127919;', text:'Clarity soal arah karir', sub:'Masih bingung mau fokus ke mana jangka panjang' },
+      ]
+    },
+    mid: {
+      title: 'Di fase ini, kamu paling stuck di area apa? &#128202;',
+      desc: 'Jujur aja, ini buat kami bisa bantu lebih tepat.',
+      options: [
+        { val:'naik_level', emoji:'&#128640;', text:'Naik ke level lebih tinggi', sub:'Promo, tanggung jawab lebih besar' },
+        { val:'skill_baru', emoji:'&#129513;', text:'Belajar skill baru yang relevan', sub:'Industri berubah cepat, mau ikut' },
+        { val:'salary', emoji:'&#128176;', text:'Salary &amp; value yang sesuai', sub:'Ngerasa belum dibayar sesuai kontribusi' },
+        { val:'pivot', emoji:'&#128260;', text:'Pindah jalur atau industri', sub:'Ingin coba arah karir yang berbeda' },
+      ]
+    },
+    senior: {
+      title: 'Di level senior, kamu lebih butuh apa? &#127942;',
+      desc: 'Sebagai yang sudah berpengalaman, apa yang paling valuable buat kamu?',
+      options: [
+        { val:'network_strategis', emoji:'&#127758;', text:'Network yang lebih strategis', sub:'Peer-level yang bisa saling insight' },
+        { val:'personal_brand', emoji:'&#10024;', text:'Personal branding &amp; visibility', sub:'Dikenal lebih luas di industri' },
+        { val:'berbagi', emoji:'&#127908;', text:'Wadah berbagi ilmu &amp; mentoring', sub:'Pengen kasih impact ke yang lebih junior' },
+        { val:'pivot_senior', emoji:'&#128301;', text:'Eksplorasi peluang baru', sub:'Advisory, board, atau arah baru' },
+      ]
+    }
+  };
+
+  function updateProgress() {
+    var pct = (currentStep / 8) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById('step-' + n).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goNext() {
+    if (currentStep === 3 && answers['q3'] === 'belum') {
+      buildQ5();
+      currentStep = 5;
+      showStep(5);
+      return;
+    }
+    if (currentStep === 4) { buildQ5(); }
+    currentStep++;
+    showStep(currentStep);
+  }
+
+  function goBack() {
+    if (currentStep === 5 && answers['q3'] === 'belum') {
+      currentStep = 3;
+      showStep(3);
+      return;
+    }
+    currentStep--;
+    showStep(currentStep);
+  }
+
+  function buildQ5() {
+    var seg = answers['q1'] || 'mid';
+    var content = q5Content[seg];
+    document.getElementById('q5-title').innerHTML = content.title;
+    document.getElementById('q5-desc').textContent = content.desc;
+    var container = document.getElementById('q5-opts');
+    container.innerHTML = '';
+    content.options.forEach(function(opt) {
+      var lbl = document.createElement('label');
+      lbl.className = 'option-item';
+      lbl.setAttribute('onclick', "selectOption(this,'q5','" + opt.val + "')");
+      lbl.innerHTML =
+        '<input type="radio" name="q5" value="' + opt.val + '"/>' +
+        '<div class="option-dot"></div>' +
+        '<div class="option-emoji">' + opt.emoji + '</div>' +
+        '<div><div class="option-text">' + opt.text + '</div><div class="option-sub">' + opt.sub + '</div></div>';
+      container.appendChild(lbl);
+    });
+    document.getElementById('btn-5').disabled = true;
+  }
+
+  function selectOption(el, qName, val) {
+    var container = el.closest('.options') || el.parentElement;
+    container.querySelectorAll('.option-item').forEach(function(i){ i.classList.remove('selected'); });
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+    answers[qName] = val;
+    var stepNum = qName.replace('q','');
+    var btn = document.getElementById('btn-' + stepNum);
+    if (btn) btn.disabled = false;
+  }
+
+  function toggleCheckbox(el, qName, val) {
+    el.classList.toggle('selected');
+    var input = el.querySelector('input');
+    if (input) input.checked = el.classList.contains('selected');
+    if (!answers[qName]) answers[qName] = [];
+    if (el.classList.contains('selected')) {
+      if (answers[qName].indexOf(val) === -1) answers[qName].push(val);
+    } else {
+      answers[qName] = answers[qName].filter(function(v){ return v !== val; });
+    }
+    if (qName === 'q2') {
+      var oi = document.getElementById('q2-other');
+      if (answers['q2'] && answers['q2'].indexOf('other_topic') !== -1) {
+        oi.classList.add('show');
+      } else {
+        oi.classList.remove('show');
+      }
+    }
+    var stepNum = qName.replace('q','');
+    var btn = document.getElementById('btn-' + stepNum);
+    if (btn) btn.disabled = !(answers[qName] && answers[qName].length > 0);
+  }
+
+  function selectScale(val) {
+    q8Scale = val;
+    document.querySelectorAll('#q8-scale .scale-btn').forEach(function(b){
+      b.classList.toggle('active', parseInt(b.dataset.val) === val);
+    });
+    checkTextarea();
+  }
+
+  function checkTextarea() {
+    var text = document.getElementById('q7-text').value.trim();
+    document.getElementById('btn-7').disabled = (text.length < 5 || q8Scale === null);
+  }
+
+  function submitForm() {
+    answers['q7'] = document.getElementById('q7-text').value.trim();
+    answers['q8_scale'] = q8Scale;
+    answers['q2_other'] = document.getElementById('q2-other').value.trim();
+    
+    // Siapkan data untuk dikirim
+    var payload = {
+      waktu: new Date().toLocaleString('id-ID'),
+      q1: answers.q1 || '-',
+      q2: ((answers.q2 || []).join(', ') || '-') + (answers.q2_other ? ' (Lainnya: ' + answers.q2_other + ')' : ''),
+      q3: answers.q3 || '-',
+      q4: (answers.q4 || []).join(', ') || '-',
+      q5: answers.q5 || '-',
+      q6: (answers.q6 || []).join(', ') || '-',
+      q7: answers.q7 || '-',
+      q8: answers.q8_scale || '-'
+    };
+
+    // Terhubung langsung ke Google Sheets (Web App URL)
+    var scriptURL = 'https://script.google.com/macros/s/AKfycbyJs3J2KjERoEKdDi66ZgQGmcYd5-jUQWJBBH9dyc_2nirnWSGgs8juFB4fwseYvr2Amg/exec';
+    
+    // Tampilkan loading state di tombol (opsional, tapi bagus untuk UX)
+    var btnSubmit = document.getElementById('btn-7');
+    var originalText = btnSubmit.innerHTML;
+    btnSubmit.innerHTML = 'Mengirim... &#9203;';
+    btnSubmit.disabled = true;
+
+    // Jika belum ada URL, langsung ke halaman sukses aja untuk testing
+    if (scriptURL === 'URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI') {
+        currentStep = 8;
+        showStep(8);
+        document.getElementById('progressFill').style.width = '100%';
+        return;
+    }
+
+    var formData = new FormData();
+    for (var key in payload) {
+      formData.append(key, payload[key]);
+    }
+
+    // Kirim ke Spreadsheet
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors', // Tambahkan ini agar tidak kena block CORS dari file://
+      body: formData
+    })
+    .then(function(response) {
+      // Karena no-cors, response akan 'opaque' (tidak bisa dibaca statusnya),
+      // tapi request tetap berhasil masuk ke Google Sheets.
+      currentStep = 8;
+      showStep(8);
+      document.getElementById('progressFill').style.width = '100%';
+    })
+    .catch(function(error) {
+      console.error('Error!', error.message);
+      alert('Gagal mengirim data. Coba lagi ya! Pastikan koneksi internet lancar.');
+      btnSubmit.innerHTML = originalText;
+      btnSubmit.disabled = false;
+    });
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
