@@ -370,7 +370,7 @@
 
     <!-- STEP 1: Segmen karir -->
     <div class="step" id="step-1">
-      <div class="step-label">Pertanyaan 1 dari 7</div>
+      <div class="step-label">Pertanyaan 1 dari 12</div>
       <div class="step-title">Sekarang kamu lagi di fase apa? &#129517;</div>
       <div class="step-desc">Pilih yang paling menggambarkan kondisimu saat ini.</div>
       <div class="options" id="q1-opts">
@@ -407,7 +407,7 @@
 
     <!-- STEP 2: Topik belajar -->
     <div class="step" id="step-2">
-      <div class="step-label">Pertanyaan 2 dari 7</div>
+      <div class="step-label">Pertanyaan 2 dari 12</div>
       <div class="step-title">Sekarang kamu lagi aktif belajar apa? &#128218;</div>
       <div class="step-desc">Pilih semua yang sedang kamu pelajari atau explore. Boleh lebih dari satu.</div>
       <div class="options grid-2" id="q2-opts">
@@ -453,7 +453,7 @@
 
     <!-- STEP 3: AI level -->
     <div class="step" id="step-3">
-      <div class="step-label">Pertanyaan 3 dari 7</div>
+      <div class="step-label">Pertanyaan 3 dari 12</div>
       <div class="step-title">Sejauh ini, kamu sudah seberapa dalam explore AI? &#129302;</div>
       <div class="step-desc">Jujur aja ya, nggak ada jawaban yang salah!</div>
       <div class="options" id="q3-opts">
@@ -490,7 +490,7 @@
 
     <!-- STEP 4: AI use case (conditional) -->
     <div class="step" id="step-4">
-      <div class="step-label">Pertanyaan 4 dari 7</div>
+      <div class="step-label">Pertanyaan 4 dari 12</div>
       <div class="step-title">AI yang kamu explore itu lebih ke arah apa? &#127919;</div>
       <div class="step-desc">Pilih semua yang relevan.</div>
       <div class="options" id="q4-opts">
@@ -528,7 +528,7 @@
 
     <!-- STEP 5: Segmented -->
     <div class="step" id="step-5">
-      <div class="step-label">Pertanyaan 5 dari 7</div>
+      <div class="step-label">Pertanyaan 5 dari 12</div>
       <div class="step-title" id="q5-title"></div>
       <div class="step-desc" id="q5-desc"></div>
       <div class="options" id="q5-opts"></div>
@@ -540,7 +540,7 @@
 
     <!-- STEP 6: Hambatan -->
     <div class="step" id="step-6">
-      <div class="step-label">Pertanyaan 6 dari 7</div>
+      <div class="step-label">Pertanyaan 6 dari 12</div>
       <div class="step-title">Apa yang paling sering bikin kamu ga jadi belajar? &#128556;</div>
       <div class="step-desc">Pilih semua yang relate.</div>
       <div class="options grid-2" id="q6-opts">
@@ -581,20 +581,207 @@
       </div>
     </div>
 
-    <!-- STEP 7: Key question -->
+    
+    
+    <!-- STEP 7: Format Belajar -->
     <div class="step" id="step-7">
-      <div class="step-label">Pertanyaan 7 dari 7</div>
+      <div class="step-label">Pertanyaan 7 dari 12</div>
+      <div class="step-title">Kalau belajar, kamu lebih prefer waktu dan format yang kayak gimana? &#9203;</div>
+      <div class="step-desc">Biar kita bisa atur jadwal yang paling pas buat mayoritas member.</div>
+      <div class="options" id="q7-opts">
+        <label class="option-item" onclick="selectOption(this,'q7','crash_course')">
+          <input type="radio" name="q7" value="crash_course"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128640;</div>
+          <div><div class="option-text">Crash Course Akhir Pekan</div><div class="option-sub">Sabtu-Minggu seharian, langsung kelar</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q7','intensive_malam')">
+          <input type="radio" name="q7" value="intensive_malam"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#127769;</div>
+          <div><div class="option-text">Intensif Malam Hari</div><div class="option-sub">Sepulang kerja, 2-3x seminggu selama sebulan</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q7','self_paced')">
+          <input type="radio" name="q7" value="self_paced"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128250;</div>
+          <div><div class="option-text">Self-paced Video</div><div class="option-sub">Bebas nonton kapan aja, mentoring mingguan aja</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q7','fleksibel')">
+          <input type="radio" name="q7" value="fleksibel"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#129337;</div>
+          <div><div class="option-text">Fleksibel</div><div class="option-sub">Yang penting materi daging, waktu bisa ngikutin</div></div>
+        </label>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-7" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 8: Competitor Pain Points -->
+    <div class="step" id="step-8">
+      <div class="step-label">Pertanyaan 8 dari 12</div>
+      <div class="step-title">Pernah ikut pelatihan/bootcamp berbayar lain yang bikin kecewa? &#128148;</div>
+      <div class="step-desc">Pilih alasan utama yang sering bikin males ikut pelatihan lain (boleh lebih dari satu).</div>
+      <div class="options grid-2" id="q8-opts">
+        <div class="option-item" onclick="toggleCheckbox(this,'q8','mahal')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#128184;</div><div class="option-text">Terlalu Mahal</div><div class="option-sub">Ga sebanding sama hasil</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q8','teori')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#128218;</div><div class="option-text">Teori Banget</div><div class="option-sub">Kurang pengalaman industri nyata</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q8','susah_konsul')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#128545;</div><div class="option-text">Susah Konsultasi</div><div class="option-sub">Sistemnya kaku, nanya mentor susah</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q8','janji_palsu')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#129325;</div><div class="option-text">Janji Manis Doang</div><div class="option-sub">Janji disalurin kerja ternyata zonk</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q8','jadwal_kaku')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#9200;</div><div class="option-text">Jadwal Kaku</div><div class="option-sub">Gak cocok buat yang sambil kerja</div></div>
+        </div>
+        <div class="option-item" onclick="toggleCheckbox(this,'q8','belum_pernah')">
+          <div class="option-dot checkbox"></div>
+          <div><div class="option-emoji">&#129335;</div><div class="option-text">Belum Pernah Kecewa</div><div class="option-sub">Atau emang belum pernah ikut</div></div>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-8" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 9: Brand Loyalty -->
+    <div class="step" id="step-9">
+      <div class="step-label">Pertanyaan 9 dari 12</div>
+      <div class="step-title">Ngomong-ngomong, apa alasan utama kamu betah dan aktif di grup kita? &#127969;</div>
+      <div class="step-desc">Pilih satu alasan yang paling kuat menurutmu.</div>
+      <div class="options" id="q9-opts">
+        <label class="option-item" onclick="selectOption(this,'q9','responsif')">
+          <input type="radio" name="q9" value="responsif"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#129309;</div>
+          <div><div class="option-text">Admin & membernya responsif dan hangat</div><div class="option-sub">Ga kaku kayak grup sebelah</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q9','review_cv')">
+          <input type="radio" name="q9" value="review_cv"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128221;</div>
+          <div><div class="option-text">Sering ada Review CV & konsultasi gratis</div><div class="option-sub">Ngebantu banget buat growth karir</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q9','info_loker')">
+          <input type="radio" name="q9" value="info_loker"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128270;</div>
+          <div><div class="option-text">Sering dapet loker/info peluang eksklusif</div><div class="option-sub">Jalur ordal atau info A1 yang ga ada di luar</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q9','networking')">
+          <input type="radio" name="q9" value="networking"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128101;</div>
+          <div><div class="option-text">Emang pengen cari jejaring / teman diskusi aja</div><div class="option-sub">Seru bisa ngobrol satu frekuensi</div></div>
+        </label>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-9" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 10: Referral -->
+    <div class="step" id="step-10">
+      <div class="step-label">Pertanyaan 10 dari 12</div>
+      <div class="step-title">Kalau kita mau perbesar komunitas ini, apa yang bikin kamu mau ngajak teman gabung? &#128227;</div>
+      <div class="step-desc">Kami pengen komunitas ini tumbuh organik dari member yang udah ngerasain impact-nya.</div>
+      <div class="options" id="q10-opts">
+        <label class="option-item" onclick="selectOption(this,'q10','reward_poin')">
+          <input type="radio" name="q10" value="reward_poin"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#127941;</div>
+          <div><div class="option-text">Ada sistem Reward/Poin</div><div class="option-sub">Bisa ditukar diskon kelas atau bedah CV VIP</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q10','konten_shareable')">
+          <input type="radio" name="q10" value="konten_shareable"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128242;</div>
+          <div><div class="option-text">Konten sesi spesifik yang gampang di-share</div><div class="option-sub">Misal sesi bahas AI gratis, aku langsung ajak temen</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q10','undangan_vip')">
+          <input type="radio" name="q10" value="undangan_vip"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#127915;</div>
+          <div><div class="option-text">Dapat Jalur Undangan Eksklusif</div><div class="option-sub">Biar kerasa eksklusif dan keren pas ngundang temen masuk</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q10','jarang_ngajak')">
+          <input type="radio" name="q10" value="jarang_ngajak"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#129335;</div>
+          <div><div class="option-text">Aku jarang ngajak teman</div><div class="option-sub">Prefer grup ini segmented aja, jangan terlalu ramai</div></div>
+        </label>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-10" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 11: Pricing -->
+    <div class="step" id="step-11">
+      <div class="step-label">Pertanyaan 11 dari 12</div>
+      <div class="step-title">Kalau Ruang Asah bikin Bootcamp Intensif berbayar, apa ekspektasimu? &#128184;</div>
+      <div class="step-desc">Sebagai member aktif, wajar kalau kamu dapat privilege. Tapi untuk operasional mentor berkualitas, intensif harus berbayar. (Bedah CV grup tetap ada opsi gratis!)</div>
+      <div class="options" id="q11-opts">
+        <label class="option-item" onclick="selectOption(this,'q11','beasiswa')">
+          <input type="radio" name="q11" value="beasiswa"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#127891;</div>
+          <div><div class="option-text">Beasiswa Khusus (Diskon 50%-60%)</div><div class="option-sub">Karena aku rajin kontribusi di grup</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q11','diskon_normal')">
+          <input type="radio" name="q11" value="diskon_normal"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128214;</div>
+          <div><div class="option-text">Diskon Member Normal (20%-30%)</div><div class="option-sub">Harga wajar & masuk akal</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q11','harga_normal')">
+          <input type="radio" name="q11" value="harga_normal"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#128142;</div>
+          <div><div class="option-text">Harga Normal (Tanpa Diskon)</div><div class="option-sub">Asalkan pengajarnya beneran praktisi top</div></div>
+        </label>
+        <label class="option-item" onclick="selectOption(this,'q11','skip_berbayar')">
+          <input type="radio" name="q11" value="skip_berbayar"/>
+          <div class="option-dot"></div>
+          <div class="option-emoji">&#9940;</div>
+          <div><div class="option-text">Aku skip kalau berbayar</div><div class="option-sub">Fokus ikutan mentoring grup yg gratis aja</div></div>
+        </label>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
+        <button class="btn-next" id="btn-11" onclick="goNext()" disabled>Lanjut &rarr;</button>
+      </div>
+    </div>
+
+    <!-- STEP 12: Key question & Scale -->
+    <div class="step" id="step-12">
+      <div class="step-label">Pertanyaan 12 dari 12</div>
       <div class="step-title">Kalau Ruang Asah hadir, apa yang HARUS ada? &#10024;</div>
       <div class="step-desc">
         Bayangkan ada komunitas belajar yang terstruktur tapi tetap kerasa santai seperti Ruang Curhat.
         Coba ceritakan apa hal yang paling penting dan kamu harapkan supaya kamu mau aktif disana?
       </div>
-      <textarea id="q7-text" placeholder="Tulis pendapatmu di sini &mdash; bebas dan jujur aja!" oninput="checkTextarea()"></textarea>
+      <textarea id="q12-text" placeholder="Tulis pendapatmu di sini &mdash; bebas dan jujur aja!" oninput="checkTextarea()"></textarea>
 
       <hr class="divider" />
 
       <div class="step-title" style="font-size:16px; margin-bottom:6px;">Seberapa tertarik kamu kalau Ruang Asah beneran hadir? &#128293;</div>
-      <div class="scale-wrap" id="q8-scale">
+      <div class="scale-wrap" id="q13-scale">
         <button class="scale-btn" onclick="selectScale(1)" data-val="1">1</button>
         <button class="scale-btn" onclick="selectScale(2)" data-val="2">2</button>
         <button class="scale-btn" onclick="selectScale(3)" data-val="3">3</button>
@@ -605,12 +792,12 @@
 
       <div class="nav">
         <button class="btn-back" onclick="goBack()">&#8592; Kembali</button>
-        <button class="btn-next" id="btn-7" onclick="submitForm()" disabled>Kirim Jawaban &#128640;</button>
+        <button class="btn-next" id="btn-12" onclick="submitForm()" disabled>Kirim Jawaban &#128640;</button>
       </div>
     </div>
 
-    <!-- STEP 8: Thank you -->
-    <div class="step" id="step-8">
+    <!-- STEP 13: Thank you -->
+    <div class="step" id="step-13">
       <div class="thankyou">
         <div class="icon-wrap">&#127881;</div>
         <h2>Terima kasih banyak!</h2>
@@ -633,7 +820,7 @@
 <script>
   var currentStep = 0;
   var answers = {};
-  var q8Scale = null;
+  var q13Scale = null;
 
   var q5Content = {
     fresh_grad: {
@@ -681,13 +868,14 @@
   };
 
   function updateProgress() {
-    var pct = (currentStep / 8) * 100;
+    var pct = (currentStep / 13) * 100;
     document.getElementById('progressFill').style.width = pct + '%';
   }
 
   function showStep(n) {
     document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
-    document.getElementById('step-' + n).classList.add('active');
+    var target = document.getElementById('step-' + n);
+    if(target) target.classList.add('active');
     updateProgress();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -770,21 +958,21 @@
   }
 
   function selectScale(val) {
-    q8Scale = val;
-    document.querySelectorAll('#q8-scale .scale-btn').forEach(function(b){
+    q13Scale = val;
+    document.querySelectorAll('#q13-scale .scale-btn').forEach(function(b){
       b.classList.toggle('active', parseInt(b.dataset.val) === val);
     });
     checkTextarea();
   }
 
   function checkTextarea() {
-    var text = document.getElementById('q7-text').value.trim();
-    document.getElementById('btn-7').disabled = (text.length < 5 || q8Scale === null);
+    var text = document.getElementById('q12-text').value.trim();
+    document.getElementById('btn-12').disabled = (text.length < 5 || q13Scale === null);
   }
 
   function submitForm() {
-    answers['q7'] = document.getElementById('q7-text').value.trim();
-    answers['q8_scale'] = q8Scale;
+    answers['q12'] = document.getElementById('q12-text').value.trim();
+    answers['q13_scale'] = q13Scale;
     answers['q2_other'] = document.getElementById('q2-other').value.trim();
     
     // Siapkan data untuk dikirim
@@ -797,22 +985,24 @@
       q5: answers.q5 || '-',
       q6: (answers.q6 || []).join(', ') || '-',
       q7: answers.q7 || '-',
-      q8: answers.q8_scale || '-'
+      q8: (answers.q8 || []).join(', ') || '-',
+      q9: answers.q9 || '-',
+      q10: answers.q10 || '-',
+      q11: answers.q11 || '-',
+      q12: answers.q12 || '-',
+      q13: answers.q13_scale || '-'
     };
 
-    // Terhubung langsung ke Google Sheets (Web App URL)
     var scriptURL = 'https://script.google.com/macros/s/AKfycbyJs3J2KjERoEKdDi66ZgQGmcYd5-jUQWJBBH9dyc_2nirnWSGgs8juFB4fwseYvr2Amg/exec';
     
-    // Tampilkan loading state di tombol (opsional, tapi bagus untuk UX)
-    var btnSubmit = document.getElementById('btn-7');
+    var btnSubmit = document.getElementById('btn-12');
     var originalText = btnSubmit.innerHTML;
     btnSubmit.innerHTML = 'Mengirim... &#9203;';
     btnSubmit.disabled = true;
 
-    // Jika belum ada URL, langsung ke halaman sukses aja untuk testing
     if (scriptURL === 'URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI') {
-        currentStep = 8;
-        showStep(8);
+        currentStep = 13;
+        showStep(13);
         document.getElementById('progressFill').style.width = '100%';
         return;
     }
@@ -822,17 +1012,14 @@
       formData.append(key, payload[key]);
     }
 
-    // Kirim ke Spreadsheet
     fetch(scriptURL, {
       method: 'POST',
-      mode: 'no-cors', // Tambahkan ini agar tidak kena block CORS dari file://
+      mode: 'no-cors',
       body: formData
     })
     .then(function(response) {
-      // Karena no-cors, response akan 'opaque' (tidak bisa dibaca statusnya),
-      // tapi request tetap berhasil masuk ke Google Sheets.
-      currentStep = 8;
-      showStep(8);
+      currentStep = 13;
+      showStep(13);
       document.getElementById('progressFill').style.width = '100%';
     })
     .catch(function(error) {
